@@ -285,5 +285,3 @@ Two licenses apply depending on the file:
   See the file header for the full text.
 
 Check the header of each source file for the exact terms.
-
----
