@@ -1,0 +1,12 @@
+obj/
+libs/
+*.o
+*.a
+*.so
+*.idx
+*.pcf
+*.advs
+out*.txt
+.vscode/
+*.swp
+*~

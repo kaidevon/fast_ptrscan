@@ -1,0 +1,42 @@
+name: Build ptrscan
+
+on:
+  push:
+    branches: [ main, master ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup NDK
+        uses: nttld/setup-ndk@v1
+        id: ndk
+        with:
+          ndk-version: r26b
+          add-to-path: true
+          link-to-sdk: true
+
+      - name: Build
+        run: ndk-build
+
+      - name: Stage
+        run: |
+          mkdir -p dist
+          cp libs/arm64-v8a/ptrscan dist/ptrscan-arm64-v8a
+          file dist/ptrscan-arm64-v8a
+          chmod +x dist/ptrscan-arm64-v8a
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ptrscan-arm64-v8a
+          path: dist/ptrscan-arm64-v8a
+          if-no-files-found: error
